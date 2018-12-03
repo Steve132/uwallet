@@ -1,0 +1,63 @@
+Embedded MCU notes
+http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-8951-CryptoAuth-RSA-ECC-Comparison-Embedded-Systems-WhitePaper.pdf
+
+https://github.com/ctz/cifra
+
+Performance of State-of-the-Art Cryptography on ARM-based Microprocessors
+PDFhttps://csrc.nist.gov › session7-vincent
+
+https://tls.mbed.org
+https://tls.mbed.org/rsa-source-code
+###MBED TLS is dual licensed in this *weeeird* way where there's two seperate downloads for GPL version and Apache version.
+####keep hash of file around for legal reasons
+https://tls.mbed.org/download
+This one is the best one to use by far. It has configurable option support and it has support for bitcoin curves.
+Need to build our own config file and cmake for it
+
+
+..Salt related options
+#define MBEDTLS_ECP_DP_CURVE25519_ENABLED should be added in the config but it's not.
+#define MBEDTLS_CHACHA20_C
+#define MBEDTLS_POLY1305_C		//needed for SEL implementation
+#define MBEDTLS_CHACHAPOLY_C
+
+..performance tweak
+#define MBEDTLS_SHA256_SMALLER 
+
+..dev features
+#define MBEDTLS_VERSION_FEATURES
+#define MBEDTLS_DEBUG_C
+#define MBEDTLS_ENTROPY_C
+#define MBEDTLS_ERROR_C  //ENABLE IF NEEDED!
+#define MBEDTLS_MD_C //generic wrapeprs
+#define MBEDTLS_PLATFORM_C //THIS can be used to substitute new definitions for the platform layer.
+#MBEDTLS_THREADING_C //needed for multithreaded calls
+#define MBEDTLS_VERSION_C
+#define MBEDTLS_PKCS5_C  //THIS IS PBKDF2!!!
+
+//#define MBEDTLS_MEMORY_BUFFER_ALLOC_C
+
+..future features
+#define MBEDTLS_ASN1_PARSE_C 
+#define MBEDTLS_ASN1_WRITE_C	//Maybe for DER?
+#define MBEDTLS_BASE64_C		//COOOL but not needed now.
+#define MBEDTLS_PEM_PARSE_C
+#define MBEDTLS_PEM_WRITE_C
+#define MBEDTLS_HMAC_DRBG_C
+
+//#define MBEDTLS_MPI_MAX_SIZE            1024 /**< Maximum number of bytes for usable MPIs. */
+This is related to b
+NOTES:  gen_key in bignum.c calls gen_prime in bignum.c which calls fill_random.  This is bytes not bits so this is extremely overkill
+SRAM restrictions here are pretty goddamned brutal.
+
+
+#define MBEDTLS_HMAC_DRBG_MAX_SEED_INPUT      256 /**< Maximum size of (re)seed buffer */
+
+ ####https://en.wikipedia.org/wiki/WolfSSL#wolfCrypt not open source
+
+https://www.libtom.net/LibTomCrypt/  Public domain
+
+https://www.microchip.com/wwwproducts/en/ATECC508A#additional-features
+
+*/
+

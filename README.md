@@ -1,2 +1,11 @@
-# uwallet
-Cryptocurrency Wallet for Embedded Systems
+
+
+
+uwallet
+
+lib/	Dependencies
+src/	Module source and internal includes
+doc/	Documentation
+include/ external includes
+
+
